@@ -15,4 +15,9 @@ class Phone extends Model
         'number',
         'user_id',
     ];
+
+    public function user(){
+        // Relacion inversa
+        return $this->belongsTo(User::class);
+    }
 }

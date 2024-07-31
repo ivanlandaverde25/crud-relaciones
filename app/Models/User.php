@@ -44,4 +44,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function phone(){
+        // Relacion uno a uno
+
+        // Esta es la forma que se una por convenciones de laravel, en este caso esta tomando como llave foranea el campo user_id, y como primaria id
+        return $this->hasOne(Phone::class);
+
+        // En el caso que se deseen cambiar, se puede delimitar dentro del mismo metodo como segundo y tercer parametro:
+        //  Segundo: Llave foranea
+        //  Tercero: Llave primaria
+        return $this->hasOne(Phone::class, 'user_id', 'id');
+    }
 }

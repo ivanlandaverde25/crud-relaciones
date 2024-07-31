@@ -4,6 +4,8 @@ use App\Models\Phone;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
+use function Pest\Laravel\get;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -11,21 +13,32 @@ Route::get('/', function () {
 // Ruta de prueba para ingresar registros
 Route::get('/pruebas', function () {
     
-    $user = User::create([
-        'name' => 'Ivan Mendoza',
-        'email' => 'ivan@gmail.com',
-        'password' => bcrypt('12345678'),
-    ]);
+    // $user = User::create([
+    //     'name' => 'Ivan Mendoza',
+    //     'email' => 'ivan@gmail.com',
+    //     'password' => bcrypt('12345678'),
+    // ]);
 
-    return "Usuario creado {$user}";
+    // Relacion principal
+    // por medio del metodo hasOne(Model::class)
+    $user = User::where('id', 1)
+        ->with('phone')
+        ->get();
+    return $user;
 });
 
-Route::get('phone', function () {
+Route::get('/phone', function () {
 
-    $phone = Phone::create([
-        'number' => '2548-9615',
-        'user_id' => 1,
-    ]);
+    // Relacion Inversar metodo belongsTo(Model::class)
+    $phone = Phone::find(1)
+    ->with('user')
+    ->get();
 
-    return "Registro ingresado {$phone}";
+    return $phone;
 });
+
+Route::get('/listados/{listado}', function ($listado) {
+    return "Holaaaa $listado";
+})
+->whereAlphaNumeric('listado')
+->whereIn('listado', ['php', 'laravel']);

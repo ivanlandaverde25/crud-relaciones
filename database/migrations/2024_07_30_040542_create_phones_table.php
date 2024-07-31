@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
             $table->string('number');               
-            // $table->unsignedInteger('user_id');     // Para los valores que sean lalves foraneas se crean del tipo unsignedBigInteger
+            // $table->unsignedBigInteger('user_id');     // Para los valores que sean lalves foraneas se crean del tipo unsignedBigInteger
             // $table->foreign('user_id')              // Luego de eso se establece la relacion
             //     ->references('id')                  // Campo de la otra tabla hacia el cual se hace referencia
             //     ->on('users')                       // Tabla a la que se hace referencia
