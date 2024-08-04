@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\PostController;
 use App\Models\Phone;
@@ -55,30 +56,35 @@ Route::resource('/phones', PhoneController::class)
 
 // Rutas para posts
 // Ruta para crear un post por medio del metodo resource
-// Route::resource('/posts', PostController::class)
-//     ->parameters(['posts' => 'post'])
-//     ->names('posts');
+Route::resource('/posts', PostController::class)
+    ->parameters(['posts' => 'post'])
+    ->names('posts');
 
 // Rutas creadas por medio de un grupo de rutas
-Route::controller(PostController::class)->prefix('posts')->name('posts.')->group(function ($post) {
-    // Ruta para listar
-    Route::get('/', 'index')->name('index');
+// Route::controller(PostController::class)->prefix('posts')->name('posts.')->group(function ($post) {
+//     // Ruta para listar
+//     Route::get('/', 'index')->name('index');
 
-    // Ruta para crear
-    Route::get('/create', 'create')->name('create');
+//     // Ruta para crear
+//     Route::get('/create', 'create')->name('create');
 
-    // Ruta para guardar
-    Route::post('/', 'store')->name('store');
+//     // Ruta para guardar
+//     Route::post('/', 'store')->name('store');
 
-    // Ruta para mostrar
-    Route::get('/{post}', 'show')->name('show');
+//     // Ruta para mostrar
+//     Route::get('/{post}', 'show')->name('show');
 
-    // Ruta para editar
-    Route::get('/{post}/edit', 'edit')->name('edit');
+//     // Ruta para editar
+//     Route::get('/{post}/edit', 'edit')->name('edit');
 
-    // Ruta para actualizar
-    Route::put('/{post}', 'update')->name('update');
+//     // Ruta para actualizar
+//     Route::put('/{post}', 'update')->name('update');
 
-    // Ruta para eliminar
-    Route::delete('/{post}', 'destroy')->name('destroy');
-});
+//     // Ruta para eliminar
+//     Route::delete('/{post}', 'destroy')->name('destroy');
+// });
+
+// Rutas para el mantenimiento de categorias
+Route::resource('/categorias', CategoriaController::class)
+    ->parameters(['categoriaa' => 'categoria'])
+    ->names('categorias');

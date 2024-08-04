@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Models\Categoria;
+use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -11,7 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return 'Aqui retornamos el listado de post creados en la base';
+        $posts = Post::orderBy('id', 'DESC')
+            ->paginate();
+        $etiqueta = "<h1>Parrafo de ejemplo para ver como funcionan los llamados de variables</h1>";
+        return view('posts.index', compact('posts', 'etiqueta'));
     }
 
     /**
@@ -19,46 +26,58 @@ class PostController extends Controller
      */
     public function create()
     {
-        return 'Formulario para crear un nuevo post';
+        $categorias = new Categoria();
+        $categorias = Categoria::get();
+        return view('posts.create', compact('categorias'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        return 'Aqui se almacenar el post dentro del sistema';
+        // return $request;
+        Post::create($request->all());
+        return redirect()->route('posts.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($post)
+    public function show(Post $post)
     {
-        return "Aqui retornamos los datos del post {$post}";
+        return view('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($post)
+    public function edit(Post $post)
     {
-        return "Aqui vamos a editar los datos de un post existente: {$post}";
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $post)
+    public function update(Request $request, Post $post)
     {
-        return "Aqui se guardaran los datos actualizados de un post existente: {$post}";
+        $request->validate([
+            'titulo' => 'required|string|min:3|max:255',
+            'contenido' => 'required|string|min:10|max:2500',
+            "slug' => 'required|string|min:2|max:255|unique:posts,slug,{$post->slug}",
+        ]);
+
+        $post->update($request->all());
+        return redirect()->route('posts.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($post)
+    public function destroy(Post $post)
     {
-        return "Aqui se eliminara un post {$post}";
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }
