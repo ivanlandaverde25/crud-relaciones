@@ -10,12 +10,17 @@
 </head>
 <body>
     <h1>Aqui se muestra el listado de posts listados</h1>
-    {{$etiqueta}}
+    {!! $etiqueta !!}
     <?php echo $etiqueta?>
+
+    {{-- Estas variables se definen dentro de un provider para compartirlas entre vistas --}}
     {{-- <h2>{{$prueba}}</h2>
     <h2>{{$prueba2}}</h2>
     <h2>{{__('Log Out')}}</h2>
     <h2>{{__('Please click the button below to verify your email address.')}}</h2> --}}
+
+    {{-- Las variables js se imprimen de igual forma, solo que con un @antepuesto --}}
+    {{-- @{{ $nombre }} --}}
 
     <br>
     <a href="{{route('posts.create')}}">

@@ -17,7 +17,10 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('id', 'DESC')
             ->paginate();
+        // Etiqueta creada para ver como se muestan las variables con valores html dentro de ellas
+        // Estas se deben mostrar por medio de la siguiente sintaxis {!! $avriable !!}
         $etiqueta = "<h1>Parrafo de ejemplo para ver como funcionan los llamados de variables</h1>";
+
         return view('posts.index', compact('posts', 'etiqueta'));
     }
 

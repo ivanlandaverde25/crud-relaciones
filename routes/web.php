@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PruebaController;
 use App\Models\Phone;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -88,3 +89,6 @@ Route::resource('/posts', PostController::class)
 Route::resource('/categorias', CategoriaController::class)
     ->parameters(['categoriaa' => 'categoria'])
     ->names('categorias');
+
+// Ruta para pruebas
+Route::get('/pruebas', PruebaController::class);
