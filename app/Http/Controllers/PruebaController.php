@@ -27,7 +27,13 @@ class PruebaController extends Controller
                 'origen' => 'DC'
             ],
         ];
+
+        // Variable para prueba de Switch
         $dia = 3;
-        return view('pruebas.index', compact('heroes', 'dia'));
+
+        // ariable para prueba de for
+        $cantidad = 10;
+
+        return view('pruebas.index', compact('heroes', 'dia', 'cantidad'));
     }
 }

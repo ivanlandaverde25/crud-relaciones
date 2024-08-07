@@ -54,6 +54,45 @@
             <p>Fin de semana pa</p>
     @endswitch
 
+    <h1>DIRECTIA FOR</h1>
+    <ul>
+        @for ($i = 0; $i < $cantidad; $i++)
+            <li>
+                Valor N°: {{$i + 1}}    
+            </li>    
+        @endfor
+    </ul>
+
+    <h1>DIRECTIVA WHILE</h1>
+    <ul>
+        @php
+         $m = 1;   
+        @endphp
+        @while ($m <= $cantidad)
+            <li>
+                Este es el registro N° {{$m}} usando un bucle while 
+                @php
+                    $m++;
+                @endphp
+            </li>    
+        @endwhile
+    </ul>
+
+    <h1>DIRECTIVA CONTINUE Y BREAK</h1>
+    {{-- Directiva continue --}}
+    {{-- Esta directiva se utiliza para saltar alguna condicional que se cumpla dentro de estro codigo --}}
+    @for ($i = 1; $i <= $cantidad; $i++)
+        @if ($i  % 3 == 0)
+            @continue;
+        @endif
+
+        @if ($i == 8)
+            <p>El bucle se cierra porque el valor de i es 8</p>
+            @break;
+        @endif
+        <p>El numero {{$i}} no es multiplo de 3</p>
+    @endfor
+
     <script>
         // Esta es una forma
         // let heroes = {!! json_encode($heroes) !!};
