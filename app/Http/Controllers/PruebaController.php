@@ -12,19 +12,23 @@ class PruebaController extends Controller
         $heroes = [
             [
                 'nombre' => 'Iron man',
-                'origen' => 'Marvel'
+                'origen' => 'Marvel',
+                'villanosVencidos' => ['Villano 1', 'Villano 2', 'Villano 3'],
             ],
             [
                 'nombre' => 'DeadPool',
-                'origen' => 'Marvel'
+                'origen' => 'Marvel',
+                'villanosVencidos' => ['Villano 4', 'Villano 5', 'Villano 6'],
             ],
             [
                 'nombre' => 'Wolverin',
-                'origen' => 'DC'
+                'origen' => 'DC',
+                'villanosVencidos' => ['Villano 7', 'Villano 8', 'Villano 9'],
             ],
             [
                 'nombre' => 'Superman',
-                'origen' => 'DC'
+                'origen' => 'DC',
+                'villanosVencidos' => ['Villano 10', 'Villano 11', 'Villano 12'],
             ],
         ];
 

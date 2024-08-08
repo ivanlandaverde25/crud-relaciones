@@ -92,3 +92,7 @@ Route::resource('/categorias', CategoriaController::class)
 
 // Ruta para pruebas
 Route::get('/pruebas', PruebaController::class);
+
+Route::get('/componentes', function(){
+    return view('pruebas.componentes');
+});
