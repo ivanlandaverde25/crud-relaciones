@@ -7,5 +7,3 @@
 ])}} role="alert">
     <span class="font-medium">{{$title}}</span> {{$slot}}
 </div>
-
-{{$attributes}}

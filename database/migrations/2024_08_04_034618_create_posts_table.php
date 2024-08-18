@@ -28,6 +28,24 @@ return new class extends Migration
             $table->date('fecha_publicacion')->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
+
+            // Para asignar la llave primaria a un campo sin que este sea autoincrementable, se usa el metodo ->primery
+            // $table->primary('campo');
+
+            // Y si se desea que este sea autoincrementable, se usa el metodo ->autoIncrement
+            // $table->autoIncrerement('campo');
+
+            // Cuando se desea cambiar el valor o un atributo de una tabla, se utiliza el metodo ->change al final de la tabla (IMPORTANTE SABER  QUE SI TIENE ALGUIEN OTRO MODIFICADOR MAS, SE DEBE AGREGAR NEUVAMENTE)
+            // $table->longText('campo')->unique()->change();
+
+            // Cuando se desea cambiar de nombre una tabla, se utiliza el metodo ->renameColumn
+            // $table->renameColumn('campo');
+
+            // Para crear un indice lo hacemos por medio del metodo ->index
+            // $table->index('campo');
+
+            // No se pa que sirven los indices fullText, pero se crean por medio del metodo ->fullText
+            // $table->fullText('campo');
         });
     }
 
@@ -37,5 +55,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('posts');
+
+        // En el caso de los campos que se agregan de mas, se eliminan
+        // $table->dropColumn('campo');
     }
 };

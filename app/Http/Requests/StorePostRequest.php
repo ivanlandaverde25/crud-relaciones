@@ -22,10 +22,10 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titulo' => 'required|string|min:3|max:255',
+            'titulo'    => 'required|string|min:3|max:255',
             'categoria' => 'required|string',
             'contenido' => 'required|string|min:10|max:2500',
-            'slug' => 'required|string|min:2|max:255|unique:posts,slug',
+            'slug'      => 'required|string|min:2|max:255|unique:posts,slug',
         ];
     }
 }
