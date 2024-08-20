@@ -141,7 +141,36 @@ Route::get('/empresas', function(){
     //                     echo $mascota->id . ' - ' . $mascota->nombre . '<br>';
     //                 });
 
-    $empresa = DB::table('mascotas')->count();
+    $empresaTotalRegistros = DB::table('mascotas')->count();
+    $empresaMaxRegistro = DB::table('mascotas')->max('id');
+    $empresaMinRegistro = DB::table('mascotas')->min('id');
+    $empresaSumaEdad = DB::table('mascotas')->sum('edad');
+    $idRegistro = 50;
+    $existenciaRegistro = '';
 
-    return 'Total de registros: ' . $empresa;
+    if (DB::table('mascotas')->where('id', '=', $idRegistro)->exists()){
+        $existenciaRegistro = "El registro con id {$idRegistro} si existe dentro de la base de datos";
+    } else {
+        $existenciaRegistro = "El registro con id {$idRegistro} NO existe dentro de la base de datos";
+    }
+
+    $respuestas = [
+        'El total de registros en la tabla es: ' . $empresaTotalRegistros,
+        'El registro con mayor valor dentro de la tabla es: ' . $empresaMaxRegistro,
+        'El registro con menor valor dentro de la tabla es: ' . $empresaMinRegistro,
+        'La sumatoria de edades de todas las mascotas es: ' . $empresaSumaEdad,
+        $existenciaRegistro,
+    ];
+
+    $query = DB::select("SELECT 
+                        CONCAT(nombre, ' - ', tipo)
+                        FROM mascotas WHERE id = " . $idRegistro);
+
+    // El meotodo WhereRaw, sirve para ejecutar sentencias where con SQL puro
+    $query2 = DB::table('mascotas')
+                ->whereRaw('id = 5')
+                ->get();
+
+    // return 'Total de registros: ' . $empresa;
+    return $query2;
 });
