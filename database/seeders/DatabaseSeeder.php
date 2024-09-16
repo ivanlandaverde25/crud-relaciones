@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Categoria;
+use App\Models\Especialidad;
 use App\Models\Mascota;
 use App\Models\Post;
 use App\Models\User;
@@ -34,5 +35,6 @@ class DatabaseSeeder extends Seeder
         // Post::factory(100)->create();
 
         Mascota::factory(10000)->create();
+        Especialidad::factory(50)->create();
     }
 }

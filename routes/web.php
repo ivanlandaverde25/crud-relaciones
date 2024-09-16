@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\PostController;
@@ -145,3 +146,14 @@ Route::get('/empresas', function(){
 
     return 'Total de registros: ' . $empresa;
 });
+
+// Rutas para las especialidades
+Route::resource('/especialidades', EspecialidadController::class)
+->parameters(['especialidades' => 'especialidad']) 
+->names('especialidades');
+
+Route::post('/especialidades', [EspecialidadController::class])
+    ->name('especialidades.favorito');
+
+Route::get('/especialidadesDeshabilitadas', [EspecialidadController::class, 'especialidadesDeshabilitadas'])
+    ->name('especialidades.deshabilitadas');
