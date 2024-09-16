@@ -149,21 +149,6 @@ Route::get('/empresas', function(){
     $idRegistro = 50;
     $existenciaRegistro = '';
 
-<<<<<<< HEAD
-    return 'Total de registros: ' . $empresa;
-});
-
-// Rutas para las especialidades
-Route::resource('/especialidades', EspecialidadController::class)
-->parameters(['especialidades' => 'especialidad']) 
-->names('especialidades');
-
-Route::post('/especialidades', [EspecialidadController::class])
-    ->name('especialidades.favorito');
-
-Route::get('/especialidadesDeshabilitadas', [EspecialidadController::class, 'especialidadesDeshabilitadas'])
-    ->name('especialidades.deshabilitadas');
-=======
     if (DB::table('mascotas')->where('id', '=', $idRegistro)->exists()){
         $existenciaRegistro = "El registro con id {$idRegistro} si existe dentro de la base de datos";
     } else {
@@ -189,5 +174,17 @@ Route::get('/especialidadesDeshabilitadas', [EspecialidadController::class, 'esp
 
     // return 'Total de registros: ' . $empresa;
     return $query2;
+
+    return 'Total de registros: ' . $empresa;
 });
->>>>>>> dbedebfc6ce3a241e828e8e27c8e9cf6f67c0958
+
+// Rutas para las especialidades
+Route::resource('/especialidades', EspecialidadController::class)
+->parameters(['especialidades' => 'especialidad']) 
+->names('especialidades');
+
+Route::post('/especialidades/{especialidad}', [EspecialidadController::class, 'especialidadFavorito'])
+    ->name('especialidades.favorito');
+
+Route::get('/especialidadesDeshabilitadas', [EspecialidadController::class, 'especialidadesDeshabilitadas'])
+    ->name('especialidades.deshabilitadas');

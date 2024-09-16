@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Especialidad;
 use Illuminate\Http\Request;
 
+use function Pest\Laravel\json;
+
 class EspecialidadController extends Controller
 {
     /**
@@ -65,5 +67,31 @@ class EspecialidadController extends Controller
     public function destroy(Especialidad $especialidad)
     {
         //
+    }
+
+    // Metodo para agregar una especialidad a favoritos
+    public function especialidadFavorito(Especialidad $especialidad){
+        if ($especialidad->favoritos != true) {
+            $especialidad->favoritos = true;
+            $especialidad->save();
+
+        } else {
+            return redirect()->back()->with([
+                'status' => 'La especialidad ya fue marcada como favorita'
+            ]);
+        }
+    }
+
+    // Metodo para retornar todas las especialidades que se encuentren deshabilitadas
+    public function especialidadesDeshabilitadas(){
+        $especialidades = new Especialidad();
+        $especialidades = Especialidad::where('activo', false)
+            ->get();
+
+            if ($especialidades){
+                return response()->json($especialidades);
+            } else{
+                return response()->json(['error' => 'No se encontraron especialidades'], 404);
+            }
     }
 }

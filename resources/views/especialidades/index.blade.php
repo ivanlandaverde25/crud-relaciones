@@ -82,9 +82,9 @@
             <div class="acciones-especialidad">
                 {{-- Marcar favorito --}}
                 @if ($especialidad->favoritos == true)
-                    <i class="fa-solid fa-heart favorito favorito-seleccionado"></i>
+                    <i class="fa-solid fa-heart favorito favorito-seleccionado" data-id="{{$especialidad->id}}"></i>
                 @else
-                    <i class="fa-regular fa-heart favorito favorito-deseleccionado"></i>
+                    <i class="fa-regular fa-heart favorito favorito-deseleccionado" data-id="{{$especialidad->id}}"></i>
                 @endif
                 {{-- Editar --}}
                 <button type="button" onclick="location.href='{{route('especialidades.edit', $especialidad)}}'" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 dark:focus:ring-yellow-900">Editar</button>
@@ -130,7 +130,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         Apple MacBook Pro 17"
@@ -167,21 +167,28 @@
 
             btnHabilitarEspecialidad.addEventListener('click', () => {
                 defaultModal.classList.remove('hidden');
+                let especialidaesDeshabilitadas = fetch('/especialidadesDeshabilitadas')
+                    .then(response => response.json())
+                    .then(data => {
+                         data.map((item) => {
+                            console.log(item.nombre_especialidad);
+                         });
+                    });
+
             });
 
             btnCerrarModal.addEventListener('click', () =>{
                 defaultModal.classList.add('hidden');
             });
             
-            // favoritoDeseleccionado.addEventListener('click', () => {
-            //     favoritoDeseleccionado.classList.toggle('hidden');
-            //     favoritoSeleccionado.classList.toggle('hidden');
-            // });
+            document.querySelectorAll('.favorito-deseleccionado').forEach((button) => {
+                button.addEventListener('click', () =>{
+                    let id = button.getAttribute('data-id');
+                    
+                    
 
-            // favoritoSeleccionado.addEventListener('click', () => {
-            //     favoritoDeseleccionado.classList.toggle('hidden');
-            //     favoritoSeleccionado.classList.toggle('hidden');
-            // });
+                });
+            });
         });
     </script>
 </x-prueba-template>
