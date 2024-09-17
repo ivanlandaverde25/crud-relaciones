@@ -70,16 +70,12 @@ class EspecialidadController extends Controller
     }
 
     // Metodo para agregar una especialidad a favoritos
-    public function especialidadFavorito(Especialidad $especialidad){
-        if ($especialidad->favoritos != true) {
+    public function especialidadFavorito(Especialidad $especialidad, Request $request){
             $especialidad->favoritos = true;
             $especialidad->save();
-
-        } else {
-            return redirect()->back()->with([
-                'status' => 'La especialidad ya fue marcada como favorita'
+            return response()->json([
+                'mensaje' => 'Registro actualizado exitosamente',
             ]);
-        }
     }
 
     // Metodo para retornar todas las especialidades que se encuentren deshabilitadas

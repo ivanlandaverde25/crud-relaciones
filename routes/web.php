@@ -183,7 +183,7 @@ Route::resource('/especialidades', EspecialidadController::class)
 ->parameters(['especialidades' => 'especialidad']) 
 ->names('especialidades');
 
-Route::post('/especialidades/{especialidad}', [EspecialidadController::class, 'especialidadFavorito'])
+Route::put('/especialidades-favorito/{especialidad}', [EspecialidadController::class, 'especialidadFavorito'])
     ->name('especialidades.favorito');
 
 Route::get('/especialidadesDeshabilitadas', [EspecialidadController::class, 'especialidadesDeshabilitadas'])

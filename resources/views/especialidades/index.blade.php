@@ -84,7 +84,13 @@
                 @if ($especialidad->favoritos == true)
                     <i class="fa-solid fa-heart favorito favorito-seleccionado" data-id="{{$especialidad->id}}"></i>
                 @else
-                    <i class="fa-regular fa-heart favorito favorito-deseleccionado" data-id="{{$especialidad->id}}"></i>
+                <form id="formAgregarFavorito">
+                    @csrf
+                    @method('PUT')
+                    <button type="button">
+                        <i class="fa-regular fa-heart favorito favorito-deseleccionado" data-slug="{{$especialidad->slug}}"></i>
+                    </button>
+                </form>
                 @endif
                 {{-- Editar --}}
                 <button type="button" onclick="location.href='{{route('especialidades.edit', $especialidad)}}'" class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 dark:focus:ring-yellow-900">Editar</button>
@@ -130,13 +136,13 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody >
+                            <tbody id="tablaEspecialidadesDeshabilitadas">
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Apple MacBook Pro 17"
+                                        <label for="" id="nombreEspecialidadDeshabilitada"></label>
                                     </th>
                                     <td class="px-6 py-4">
-                                        Silver
+                                        <input type="checkbox" name="" id="checkEspecialidadDeshabilitada" @checked(false)>
                                     </td>
                                 </tr>
                             </tbody>
@@ -164,15 +170,27 @@
             let btnHabilitarEspecialidad = document.getElementById('btnHabilitarEspecialidad');
             let defaultModal = document.getElementById('default-modal');
             let btnCerrarModal = document.getElementById('btnCerrarModal');
-
+            let nombreEspecialidadDeshabilitada = document.getElementById('nombreEspecialidadDeshabilitada');
+            let tablaEspecialidadesDeshabilitadas = document.getElementById('tablaEspecialidadesDeshabilitadas');
+            
+            // Formulario para agregar a favorito
+            let formAgregarFavorito = document.getElementById('formAgregarFavorito');
+            
             btnHabilitarEspecialidad.addEventListener('click', () => {
                 defaultModal.classList.remove('hidden');
+
                 let especialidaesDeshabilitadas = fetch('/especialidadesDeshabilitadas')
-                    .then(response => response.json())
-                    .then(data => {
-                         data.map((item) => {
-                            console.log(item.nombre_especialidad);
-                         });
+                .then(response => response.json())
+                .then(data => {
+                        tablaEspecialidadesDeshabilitadas.innerHTML = '';
+                        data.forEach((item) => {
+                            let fila = document.createElement('tr');
+                            fila.innerHTML = `
+                            <td>${item.nombre_especialidad}</td>
+                            <td><input type="checkbox" name="" id="checkEspecialidadDeshabilitada" @checked(false)></td>
+                            `;
+                            tablaEspecialidadesDeshabilitadas.appendChild(fila);
+                        });
                     });
 
             });
@@ -181,12 +199,35 @@
                 defaultModal.classList.add('hidden');
             });
             
+            // Actualizacion de registro en favoritos
+            async function actualizarRegistro(id) {
+
+                // Enviar la petición fetch
+                const response = await fetch('/especialidades-favorito/'+id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Asegura la protección CSRF
+                    },
+                    body: JSON.stringify({
+                        favoritos: true
+                    })
+                });
+
+                // Manejar la respuesta
+                const data = await response.json();
+                if (response.ok) {
+                    favoritoSeleccionado.classList.remove('hidden');
+                    favoritoDeseleccionado.classList.add('hidden');
+                } else {
+                    alert('Hubo un error al actualizar');
+                }
+            }
+
             document.querySelectorAll('.favorito-deseleccionado').forEach((button) => {
                 button.addEventListener('click', () =>{
-                    let id = button.getAttribute('data-id');
-                    
-                    
-
+                    let id = button.getAttribute('data-slug');
+                    actualizarRegistro(id);
                 });
             });
         });
